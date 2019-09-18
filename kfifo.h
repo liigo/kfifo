@@ -1,4 +1,3 @@
-/* SPDX-License-Identifier: GPL-2.0-or-later */
 /*
  * A generic kernel FIFO implementation
  *
@@ -36,10 +35,17 @@
  * to lock the reader.
  */
 
-#include <linux/kernel.h>
-#include <linux/spinlock.h>
-#include <linux/stddef.h>
-#include <linux/scatterlist.h>
+// #include <linux/kernel.h>
+// #include <linux/spinlock.h>
+// #include <linux/stddef.h>
+// #include <linux/scatterlist.h>
+
+// by liigo
+#include <stdlib.h>
+#include <errno.h>
+#define __must_check 
+#define ARRAY_SIZE(ary) (sizeof((ary))/sizeof(*(ary)))
+// end
 
 struct __kfifo {
 	unsigned int	in;
@@ -754,11 +760,11 @@ __kfifo_uint_must_check_helper( \
 	__kfifo_out_peek(__kfifo, __buf, __n); \
 }) \
 )
+// liigo: we dont have gfp_t
+// extern int __kfifo_alloc(struct __kfifo *fifo, unsigned int size,
+// 	size_t esize, gfp_t gfp_mask);
 
-extern int __kfifo_alloc(struct __kfifo *fifo, unsigned int size,
-	size_t esize, gfp_t gfp_mask);
-
-extern void __kfifo_free(struct __kfifo *fifo);
+// extern void __kfifo_free(struct __kfifo *fifo);
 
 extern int __kfifo_init(struct __kfifo *fifo, void *buffer,
 	unsigned int size, size_t esize);
@@ -769,17 +775,19 @@ extern unsigned int __kfifo_in(struct __kfifo *fifo,
 extern unsigned int __kfifo_out(struct __kfifo *fifo,
 	void *buf, unsigned int len);
 
-extern int __kfifo_from_user(struct __kfifo *fifo,
-	const void __user *from, unsigned long len, unsigned int *copied);
+/// comment following by liigo
 
-extern int __kfifo_to_user(struct __kfifo *fifo,
-	void __user *to, unsigned long len, unsigned int *copied);
+// extern int __kfifo_from_user(struct __kfifo *fifo,
+// 	const void __user *from, unsigned long len, unsigned int *copied);
 
-extern unsigned int __kfifo_dma_in_prepare(struct __kfifo *fifo,
-	struct scatterlist *sgl, int nents, unsigned int len);
+// extern int __kfifo_to_user(struct __kfifo *fifo,
+// 	void __user *to, unsigned long len, unsigned int *copied);
 
-extern unsigned int __kfifo_dma_out_prepare(struct __kfifo *fifo,
-	struct scatterlist *sgl, int nents, unsigned int len);
+// extern unsigned int __kfifo_dma_in_prepare(struct __kfifo *fifo,
+// 	struct scatterlist *sgl, int nents, unsigned int len);
+
+// extern unsigned int __kfifo_dma_out_prepare(struct __kfifo *fifo,
+// 	struct scatterlist *sgl, int nents, unsigned int len);
 
 extern unsigned int __kfifo_out_peek(struct __kfifo *fifo,
 	void *buf, unsigned int len);
@@ -790,23 +798,23 @@ extern unsigned int __kfifo_in_r(struct __kfifo *fifo,
 extern unsigned int __kfifo_out_r(struct __kfifo *fifo,
 	void *buf, unsigned int len, size_t recsize);
 
-extern int __kfifo_from_user_r(struct __kfifo *fifo,
-	const void __user *from, unsigned long len, unsigned int *copied,
-	size_t recsize);
+// extern int __kfifo_from_user_r(struct __kfifo *fifo,
+// 	const void __user *from, unsigned long len, unsigned int *copied,
+// 	size_t recsize);
 
-extern int __kfifo_to_user_r(struct __kfifo *fifo, void __user *to,
-	unsigned long len, unsigned int *copied, size_t recsize);
+// extern int __kfifo_to_user_r(struct __kfifo *fifo, void __user *to,
+// 	unsigned long len, unsigned int *copied, size_t recsize);
 
-extern unsigned int __kfifo_dma_in_prepare_r(struct __kfifo *fifo,
-	struct scatterlist *sgl, int nents, unsigned int len, size_t recsize);
+// extern unsigned int __kfifo_dma_in_prepare_r(struct __kfifo *fifo,
+// 	struct scatterlist *sgl, int nents, unsigned int len, size_t recsize);
 
-extern void __kfifo_dma_in_finish_r(struct __kfifo *fifo,
-	unsigned int len, size_t recsize);
+// extern void __kfifo_dma_in_finish_r(struct __kfifo *fifo,
+// 	unsigned int len, size_t recsize);
 
-extern unsigned int __kfifo_dma_out_prepare_r(struct __kfifo *fifo,
-	struct scatterlist *sgl, int nents, unsigned int len, size_t recsize);
+// extern unsigned int __kfifo_dma_out_prepare_r(struct __kfifo *fifo,
+// 	struct scatterlist *sgl, int nents, unsigned int len, size_t recsize);
 
-extern void __kfifo_dma_out_finish_r(struct __kfifo *fifo, size_t recsize);
+// extern void __kfifo_dma_out_finish_r(struct __kfifo *fifo, size_t recsize);
 
 extern unsigned int __kfifo_len_r(struct __kfifo *fifo, size_t recsize);
 
@@ -818,3 +826,4 @@ extern unsigned int __kfifo_out_peek_r(struct __kfifo *fifo,
 extern unsigned int __kfifo_max_r(unsigned int len, size_t recsize);
 
 #endif
+
