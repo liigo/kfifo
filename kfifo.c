@@ -87,9 +87,11 @@ int __kfifo_init(struct __kfifo *fifo, void *buffer,
 		unsigned int size, size_t esize)
 {
 	size /= esize;
+	size = roundup_pow_of_two(size);
 
-	if (!is_power_of_2(size))
-		size = rounddown_pow_of_two(size);
+	// FIXME(liigo): use rounddown
+	// if (!is_power_of_2(size))
+	//     size = rounddown_pow_of_two(size);
 
 	fifo->in = 0;
 	fifo->out = 0;
