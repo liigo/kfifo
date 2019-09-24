@@ -2,16 +2,17 @@
 CFLAGS = -std=c11 -Wall
 LDFLAGS = -lpthread
 
-target = main
+target = ./main
 
 build: main.o ../kfifo.o
 	${CC} -o ${target} ${LDFLAGS} $^
 
 run: build
-	./${target}
+	${target}
 
 clean:
-	rm -rf *.o
+	# rm -rf *.o
+	find . -name "*.o" | xargs rm -f
 	rm -f ${target}
 
 all: clean build
