@@ -16,7 +16,7 @@
 #include <memory.h>
 #include "kfifo.h"
 
-// liigo: we use gcc built-in, not the kernel one
+// liigo: we use gcc built-in, not kernel functions
 #define smp_wmb __sync_synchronize
 
 #define min(x,y) ((x)<(y)?(x):(y))
