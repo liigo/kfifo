@@ -1,6 +1,6 @@
 # CC = cc
 CFLAGS = -std=c11 -Wall
-LDFLAGS = -lpthread
+LDFLAGS = -pthread
 
 target = ./main
 

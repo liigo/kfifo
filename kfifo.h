@@ -40,11 +40,14 @@
 // #include <linux/stddef.h>
 // #include <linux/scatterlist.h>
 
-// by liigo
+// liigo 20190919
 #include <stdlib.h>
 #include <errno.h>
 #define __must_check 
 #define ARRAY_SIZE(ary) (sizeof((ary))/sizeof(*(ary)))
+#ifdef __GNUC__
+	#define typeof __typeof__
+#endif
 // end
 
 struct __kfifo {
