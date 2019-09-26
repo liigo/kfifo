@@ -43,10 +43,11 @@
 // liigo 20190919
 #include <stdlib.h>
 #include <errno.h>
-#define __must_check 
+#define must_check
 #define ARRAY_SIZE(ary) (sizeof((ary))/sizeof(*(ary)))
 #ifdef __GNUC__
 	#define typeof __typeof__
+	#define smp_wmb __sync_synchronize
 #endif
 // end
 
