@@ -1,5 +1,8 @@
 # kfifo
+
 kfifo, a generic userspace FIFO implementation, port from Linux kernel
+
+https://blog.csdn.net/liigo/article/details/100993236
 
 ----
 
