@@ -43,7 +43,7 @@
 // liigo 20190919
 #include <stdlib.h>
 #include <errno.h>
-#define must_check
+#define __must_check
 #define ARRAY_SIZE(ary) (sizeof((ary))/sizeof(*(ary)))
 #ifdef __GNUC__
 	#define typeof __typeof__

@@ -1,5 +1,5 @@
-# CC = cc
-CFLAGS = -std=c11 -Wall
+# CC = gcc
+CFLAGS = -std=c99 -Wall
 LDFLAGS = -pthread
 
 target = ./main
@@ -14,6 +14,7 @@ clean:
 	# rm -rf *.o
 	find . -name "*.o" | xargs rm -f
 	rm -f ${target}
+	rm -f ../kfifo.o
 
 all: clean build
 

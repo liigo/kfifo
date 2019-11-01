@@ -3,12 +3,13 @@
 #include <pthread.h>
 #include "../kfifo.h"
 
-DEFINE_KFIFO(g_fifobuf, int, 16);
+DECLARE_KFIFO(g_fifobuf, int, 16);
+// DEFINE_KFIFO(g_fifobuf, int, 16);
 
 void* write_thread(void* arg) {
-    int x = 0;
     for (int i = 0; i < 20; i++) {
         if (kfifo_is_full(&g_fifobuf)) {
+            int x = 0;
             kfifo_out(&g_fifobuf, &x, 1);
             printf("discard %d\n", x);
         }
@@ -33,9 +34,9 @@ void* read_thread(void* arg) {
 }
 
 int main() {
-    printf("hello kfifo\n");
+    INIT_KFIFO(g_fifobuf);
     int n = kfifo_avail(&g_fifobuf);
-    printf("avail: %d\n", n);
+    printf("hello kfifo, avail: %d\n", n);
 
     pthread_t r, w;
     pthread_create(&w, NULL, write_thread, NULL);
