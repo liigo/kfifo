@@ -31,6 +31,13 @@ static inline unsigned int roundup_pow_of_two(unsigned int v) {
     return v;
 }
 
+// https://blog.csdn.net/dreamispossible/article/details/91162847
+static unsigned int rounddown_pow_of_two(unsigned int n) {
+	n|=n>>1; n|=n>>2; n|=n>>4; n|=n>>8; n|=n>>16;
+	return (n+1) >> 1;
+}
+
+
 /*
  * internal helper to calculate the unused elements in a fifo
  */
@@ -85,11 +92,7 @@ int __kfifo_init(struct __kfifo *fifo, void *buffer,
 		unsigned int size, size_t esize)
 {
 	size /= esize;
-	size = roundup_pow_of_two(size);
-
-	// FIXME(liigo): use rounddown
-	// if (!is_power_of_2(size))
-	//     size = rounddown_pow_of_two(size);
+	size = rounddown_pow_of_two(size);
 
 	fifo->in = 0;
 	fifo->out = 0;
