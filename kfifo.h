@@ -72,7 +72,7 @@ struct __kfifo {
 #define __STRUCT_KFIFO(type, size, recsize, ptrtype) \
 { \
 	__STRUCT_KFIFO_COMMON(type, recsize, ptrtype); \
-	type		buf[((size < 2) || (size & (size - 1))) ? -1 : size]; \
+	type buf[((size < 2) || (size & (size - 1))) ? -1 : size]; /* liigo: ensure `size` is power of 2 */\
 }
 
 #define STRUCT_KFIFO(type, size) \
@@ -353,7 +353,7 @@ __kfifo_int_must_check_helper( \
  * kfifo_init - initialize a fifo using a preallocated buffer
  * @fifo: the fifo to assign the buffer
  * @buffer: the preallocated buffer to be used
- * @size: the size of the internal buffer, this have to be a power of 2
+ * @size: the size of the internal buffer, in bytes, this have to be a power of 2
  *
  * This macro initializes a fifo using a preallocated buffer.
  *
