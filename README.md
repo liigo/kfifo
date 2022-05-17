@@ -4,6 +4,8 @@ kfifo, a generic userspace FIFO implementation, port from Linux kernel
 
 https://blog.csdn.net/liigo/article/details/100993236
 
+20220224: added `ringbuf_t` (ring buffer), a simple copy of kfifo removing usage of typeof, which is not available in ANSI C and some ancient C compilers (I'm looking at you, CodeWarrior 5.1).
+
 ----
 
 ## original source
