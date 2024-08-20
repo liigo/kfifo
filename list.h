@@ -38,8 +38,8 @@
 #define READ_ONCE(x) (x)
 
 // liigo 20200212: copy from linux/poison.h
-#define LIST_POISON1  ((void *) 0x100 + 0)
-#define LIST_POISON2  ((void *) 0x122 + 0)
+#define LIST_POISON1  ((char *) 0x100 + 0)
+#define LIST_POISON2  ((char *) 0x122 + 0)
 
 // liigo 20200212: copy from linux/types.h
 struct list_head {

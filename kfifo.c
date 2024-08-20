@@ -124,8 +124,8 @@ static void kfifo_copy_in(struct __kfifo *fifo, const void *src,
 	}
 	l = min(len, size - off);
 
-	memcpy(fifo->data + off, src, l);
-	memcpy(fifo->data, src + l, len - l);
+	memcpy((char *)fifo->data + off, src, l);
+	memcpy(fifo->data, (char *)src + l, len - l);
 	/*
 	 * make sure that the data in the fifo is up to date before
 	 * incrementing the fifo->in index counter
@@ -163,8 +163,8 @@ static void kfifo_copy_out(struct __kfifo *fifo, void *dst,
 	}
 	l = min(len, size - off);
 
-	memcpy(dst, fifo->data + off, l);
-	memcpy(dst + l, fifo->data, len - l);
+	memcpy(dst, (char *)fifo->data + off, l);
+	memcpy((char *)dst + l, fifo->data, len - l);
 	/*
 	 * make sure that the data is copied before
 	 * incrementing the fifo->out index counter
